@@ -35,7 +35,7 @@ const EventSchema = new Schema({
    category: {type: Schema.Types.ObjectId, ref: "Category"},
    level: {type: Schema.Types.ObjectId, ref: "Level"},
    gender: {type: Schema.Types.ObjectId, ref: "Gender"},
-   Organizer: {type: Schema.Types.ObjectId, ref: "User"},
+   organizer: {type: Schema.Types.ObjectId, ref: "User"},
 
 })
 

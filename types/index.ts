@@ -27,11 +27,15 @@ export type CreateUserParams = {
       imageUrl: string
       startDateTime: Date
       endDateTime: Date
+      registrationDeadline: Date
       categoryId: string
+      genderId: string
+      levelId: string
       price: string
       isFree: boolean
       url: string
     }
+    
     path: string
   }
   
@@ -45,7 +49,10 @@ export type CreateUserParams = {
       location: string
       startDateTime: Date
       endDateTime: Date
+      registrationDeadline: Date
       categoryId: string
+      genderId: string
+      levelId: string
       price: string
       isFree: boolean
       url: string
@@ -61,6 +68,8 @@ export type CreateUserParams = {
   export type GetAllEventsParams = {
     query: string
     category: string
+    level: string
+    gender: string
     limit: number
     page: number
   }
@@ -78,12 +87,19 @@ export type CreateUserParams = {
     page: number | string
   }
   
-//   export type GetRelatedEventsByLevelParams = {
-//     categoryId: string
-//     eventId: string
-//     limit?: number
-//     page: number | string
-//   }
+  export type GetRelatedEventsByLevelParams = {
+    levelId: string
+    eventId: string
+    limit?: number
+    page: number | string
+  }
+
+  export type GetRelatedEventsByGenderParams = {
+    genderId: string
+    eventId: string
+    limit?: number
+    page: number | string
+  }
 
   export type Event = {
     _id: string
@@ -95,6 +111,7 @@ export type CreateUserParams = {
     location: string
     startDateTime: Date
     endDateTime: Date
+    registrationDeadline: Date
     url: string
     organizer: {
       _id: string
@@ -105,13 +122,31 @@ export type CreateUserParams = {
       _id: string
       name: string
     }
+    gender: {
+      _id: string
+      name: string
+    }
+    level: {
+      _id: string
+      name: string
+    }
   }
   
   // ====== CATEGORY PARAMS
   export type CreateCategoryParams = {
     categoryName: string
   }
-  
+
+  // ====== GENDER PARAMS
+  export type CreateGenderParams = {
+    genderName: string
+  }
+
+  // ====== LEVEL PARAMS
+  export type CreateLevelParams = {
+    levelName: string
+  }
+
   // ====== ORDER PARAMS
   export type CheckoutOrderParams = {
     eventTitle: string
