@@ -1,5 +1,5 @@
 import { getEventById, getRelatedEventsByCategory } from '@/lib/actions/event.actions';
-import { SearchParamProps } from '@/types';
+import { SearchParamProps } from '@/types/index';
 import React from 'react';
 import Image from 'next/image';
 import { formatDateTime } from '@/lib/utils';
@@ -11,7 +11,8 @@ const EventDetails = async ({ params, searchParams }: SearchParamProps) => {
   const { id } = await params;  // Wait for params to be resolved
   const event = await getEventById(id);  // Fetch event by ID
   // Safely get the `page` from `searchParams`
-  const page = Array.isArray(searchParams.page) ? searchParams.page[0] : searchParams.page || '1';
+  const { page: tempPage } = await searchParams;
+  const page = Array.isArray(tempPage) ? tempPage[0] : tempPage || '1';
   // Convert `page` to a number if necessary, depending on your component's requirements
   const pageNumber = Number(page) || 1; // Ensure it is a valid number
   

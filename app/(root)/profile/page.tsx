@@ -12,8 +12,14 @@ const ProfilePage = async ({ searchParams }: SearchParamProps) => {
   const { sessionClaims } = await auth();
   const userId = sessionClaims?.userId as string;
 
-//   const ordersPage = Number(searchParams?.ordersPage) || 1;
-  const eventsPage = Number(searchParams?.eventsPage) || 1;
+  let { ordersPage=1, eventsPage=1} = await searchParams;
+  if(Array.isArray(ordersPage)) { ordersPage = ordersPage[0]; }
+    if(Array.isArray(eventsPage)) { eventsPage = eventsPage[0]; }
+    ordersPage = Number(ordersPage);
+    eventsPage = Number(eventsPage);
+
+  // const ordersPage = Number(searchParams?.ordersPage) || 1;
+  // const eventsPage = Number(searchParams?.eventsPage) || 1;
 
 //   const orders = await getOrdersByUser({ userId, page: ordersPage})
 

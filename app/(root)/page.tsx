@@ -1,19 +1,35 @@
 import { Button } from "@/components/ui/button";
 import Collection from "@/components/shared/Collection";
-import { getAllEvents } from "@/lib/actions/event.actions"
+import { getAllEvents } from '@/lib/actions/event.actions';
+import { SearchParamProps } from '@/types';
 import Image from "next/image";
 import Link from "next/link";
+import Search from "@/components/shared/Search";
+import CategoryFilter from "@/components/shared/CategoryFilter";
 // 
 
-export default async function Home() {
-  const events = await getAllEvents({
-    query: "",
-    category: "",
-    gender: "",
-    level: "",
-    page: 1,
-    limit: 6
+export default async function Home({ searchParams }: SearchParamProps) {
+  let { page=1, searchText="", category="", level="", gender="" } = await searchParams;
+  if(Array.isArray(page)) { page = page[0]; }
+  if(Array.isArray(searchText)) { searchText = searchText[0]; }
+  if(Array.isArray(category)) { category = category[0]; }
+  if(Array.isArray(level)) { level = level[0]; }
+  if(Array.isArray(gender)) { gender = gender[0]; }
+  page = Number(page);
 
+  // const page = Number(searchParams?.page) || 1;
+  // const searchText = (searchParams?.query as string) || '';
+  // const category = (searchParams?.category as string) || '';
+  // const level = (searchParams?.level as string) || '';
+  // const gender = (searchParams?.gender as string) || '';
+  
+  const events = await getAllEvents({
+    query: searchText,
+    category,
+    page,
+    level,
+    gender,
+    limit: 6
   })
 
   //console.log(events)
@@ -48,11 +64,9 @@ export default async function Home() {
       </h2>
 
       <div className="flex w-full flex-col gap-5 md:flex-row">
-        search
-        categoryFilter
-        levelFilter
-        genderFilter
-      </div>
+          <Search />
+          <CategoryFilter />
+        </div>
 
       <Collection
         data={events?.data}
