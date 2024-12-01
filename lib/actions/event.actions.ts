@@ -25,13 +25,7 @@ const getCategoryByName = async (name: string) => {
   return Category.findOne({ name: { $regex: name, $options: 'i' } })
 }
 
-const getGenderByName = async (name: string) => {
-  return Gender.findOne({ name: { $regex: name, $options: 'i' } })
-}
-
-const getLevelByName = async (name: string) => {
-  return Level.findOne({ name: { $regex: name, $options: 'i' } })
-}
+// r
 
 const populateEvent = (query: any) => {
   return query
