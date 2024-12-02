@@ -134,7 +134,7 @@ const EventDetails = async ({ params, searchParams }: SearchParamProps) => {
               page={pageNumber}
               totalPages={relatedEvents?.totalPages}
             />
-      </section>
+      </section> 
     </>
   );
 };

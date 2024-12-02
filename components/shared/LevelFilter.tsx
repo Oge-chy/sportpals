@@ -7,40 +7,41 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import { getAllCategories } from "@/lib/actions/category.actions";
-import { ICategory } from "@/lib/database/models/category.model";
+import { getAllLevels } from "@/lib/actions/level.actions";
+import { ILevel } from "@/lib/database/models/level.model";
 import { formUrlQuery, removeKeysFromQuery } from "@/lib/utils";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
-const CategoryFilter = () => {
-  const [categories, setCategories] = useState<ICategory[]>([]);
+const LevelFilter = () => {
+  const [levels, setLevels] = useState<ILevel[]>([]);
   const router = useRouter();
   const searchParams = useSearchParams();
-
+  
   useEffect(() => {
-    const getCategories = async () => {
-      const categoryList = await getAllCategories();
+    const getLevels = async () => {
+        const levelList = await getAllLevels()
 
-      categoryList && setCategories(categoryList as ICategory[])
+        levelList && setLevels(levelList as ILevel[])
     }
 
-    getCategories();
-  }, [])
-  
-  const onSelectCategory = (category: string) => {
+    getLevels()
+}, [])
+
+
+  const onSelectLevel = (level: string) => {
       let newUrl = '';
-      
-      if(category && category !== 'All') {
+
+      if(level && level !== 'All') {
         newUrl = formUrlQuery({
           params: searchParams.toString(),
-          key: 'category',
-          value: category
+          key: 'level',
+          value: level
         })
       } else {
         newUrl = removeKeysFromQuery({
           params: searchParams.toString(),
-          keysToRemove: ['category']
+          keysToRemove: ['level']
         })
       }
 
@@ -48,16 +49,16 @@ const CategoryFilter = () => {
   }
 
   return (
-    <Select onValueChange={(value: string) => onSelectCategory(value)}>
+    <Select onValueChange={(value: string) => onSelectLevel(value)}>
       <SelectTrigger className="select-field">
-        <SelectValue placeholder="Category" />
+        <SelectValue placeholder="Level" />
       </SelectTrigger>
       <SelectContent>
         <SelectItem value="All" className="select-item p-regular-14">All</SelectItem>
 
-        {categories.map((category) => (
-          <SelectItem value={category.name} key={category._id} className="select-item p-regular-14">
-            {category.name}
+        {levels.map((level) => (
+          <SelectItem value={level.name} key={level._id} className="select-item p-regular-14">
+            {level.name}
           </SelectItem>
         ))}
       </SelectContent>
@@ -65,4 +66,4 @@ const CategoryFilter = () => {
   )
 }
 
-export default CategoryFilter
+export default LevelFilter

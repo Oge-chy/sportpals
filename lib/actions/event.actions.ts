@@ -25,7 +25,13 @@ const getCategoryByName = async (name: string) => {
   return Category.findOne({ name: { $regex: name, $options: 'i' } })
 }
 
-// r
+const getGenderByName = async (name: string) => {
+  return Gender.findOne({ name: { $regex: name, $options: 'i' } })
+}
+
+const getLevelByName = async (name: string) => {
+  return Level.findOne({ name: { $regex: name, $options: 'i' } })
+}
 
 const populateEvent = (query: any) => {
   return query
@@ -109,13 +115,18 @@ export async function getAllEvents({ query, limit = 6, page, category, gender, l
 
     const titleCondition = query ? { title: { $regex: query, $options: 'i' } } : {}
     const categoryCondition = category ? await getCategoryByName(category) : null
-    // const genderCondition = gender ? await getGenderByName(gender) : null
-    // const levelCondition = level ? await getLevelByName(level) : null
+    const genderCondition = gender ? await getGenderByName(gender) : null
+    const levelCondition = level ? await getLevelByName(level) : null
 
     const conditions = {
-      $and: [titleCondition, categoryCondition ? { category: categoryCondition._id } : {}],
-    }
-// , genderCondition ? { gender: genderCondition._id } : {}, levelCondition ? { level: levelCondition._id } : {} 
+      $and: [
+        titleCondition, 
+        categoryCondition ? { category: categoryCondition._id } : {}, 
+        genderCondition ? { gender: genderCondition._id } : {}, 
+        levelCondition ? { level: levelCondition._id } : {}
+      ],
+    };
+
     const skipAmount = (Number(page) - 1) * limit
     const eventsQuery = Event.find(conditions)
       .sort({ createdAt: 'desc' })

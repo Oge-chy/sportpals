@@ -6,6 +6,8 @@ import Image from "next/image";
 import Link from "next/link";
 import Search from "@/components/shared/Search";
 import CategoryFilter from "@/components/shared/CategoryFilter";
+import LevelFilter from "@/components/shared/LevelFilter";
+import GenderFilter from "@/components/shared/GenderFilter";
 // 
 
 export default async function Home({ searchParams }: SearchParamProps) {
@@ -66,6 +68,8 @@ export default async function Home({ searchParams }: SearchParamProps) {
       <div className="flex w-full flex-col gap-5 md:flex-row">
           <Search />
           <CategoryFilter />
+          <GenderFilter />
+          <LevelFilter />
         </div>
 
       <Collection

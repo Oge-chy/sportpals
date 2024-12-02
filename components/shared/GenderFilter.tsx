@@ -7,40 +7,40 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import { getAllCategories } from "@/lib/actions/category.actions";
-import { ICategory } from "@/lib/database/models/category.model";
+import { getAllGenders } from "@/lib/actions/gender.actions";
+import { IGender } from "@/lib/database/models/gender.model";
 import { formUrlQuery, removeKeysFromQuery } from "@/lib/utils";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
-const CategoryFilter = () => {
-  const [categories, setCategories] = useState<ICategory[]>([]);
+const GenderFilter = () => {
+  const [genders, setGenders] = useState<IGender[]>([]);
   const router = useRouter();
   const searchParams = useSearchParams();
 
   useEffect(() => {
-    const getCategories = async () => {
-      const categoryList = await getAllCategories();
+    const getGenders = async () => {
+      const genderList = await getAllGenders();
 
-      categoryList && setCategories(categoryList as ICategory[])
+      genderList && setGenders(genderList as IGender[])
     }
 
-    getCategories();
+    getGenders();
   }, [])
-  
-  const onSelectCategory = (category: string) => {
+
+  const onSelectGender = (gender: string) => {
       let newUrl = '';
-      
-      if(category && category !== 'All') {
+
+      if(gender && gender !== 'All') {
         newUrl = formUrlQuery({
           params: searchParams.toString(),
-          key: 'category',
-          value: category
+          key: 'gender',
+          value: gender
         })
       } else {
         newUrl = removeKeysFromQuery({
           params: searchParams.toString(),
-          keysToRemove: ['category']
+          keysToRemove: ['gender']
         })
       }
 
@@ -48,16 +48,16 @@ const CategoryFilter = () => {
   }
 
   return (
-    <Select onValueChange={(value: string) => onSelectCategory(value)}>
+    <Select onValueChange={(value: string) => onSelectGender(value)}>
       <SelectTrigger className="select-field">
-        <SelectValue placeholder="Category" />
+        <SelectValue placeholder="Gender" />
       </SelectTrigger>
       <SelectContent>
         <SelectItem value="All" className="select-item p-regular-14">All</SelectItem>
 
-        {categories.map((category) => (
-          <SelectItem value={category.name} key={category._id} className="select-item p-regular-14">
-            {category.name}
+        {genders.map((gender) => (
+          <SelectItem value={gender.name} key={gender._id} className="select-item p-regular-14">
+            {gender.name}
           </SelectItem>
         ))}
       </SelectContent>
@@ -65,4 +65,4 @@ const CategoryFilter = () => {
   )
 }
 
-export default CategoryFilter
+export default GenderFilter

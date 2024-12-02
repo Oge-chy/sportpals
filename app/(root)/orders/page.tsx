@@ -1,4 +1,4 @@
-import Search  from '@/components/shared/Search'
+import Search from '@/components/shared/Search'
 import { getOrdersByEvent } from '@/lib/actions/order.actions'
 import { formatDateTime, formatPrice } from '@/lib/utils'
 import { SearchParamProps } from '@/types'
@@ -7,8 +7,8 @@ import { IOrderItem } from '@/lib/database/models/order.model'
 const Orders = async ({ searchParams }: SearchParamProps) => {
     let { eventId = "", searchText = ""} = await searchParams;
 
-//   const eventId = (searchParams?.eventId as string) || ''
-//   const searchText = (searchParams?.query as string) || ''
+  // const eventId = (searchParams?.eventId as string) || ''
+  // const searchText = (searchParams?.query as string) || ''
     if(Array.isArray(eventId)) { eventId = eventId[0]; }
     if(Array.isArray(searchText)) { searchText = searchText[0]; }
 
@@ -30,7 +30,7 @@ const Orders = async ({ searchParams }: SearchParamProps) => {
             <tr className="p-medium-14 border-b text-grey-500">
               <th className="min-w-[250px] py-3 text-left">Order ID</th>
               <th className="min-w-[200px] flex-1 py-3 pr-4 text-left">Event Title</th>
-              <th className="min-w-[150px] py-3 text-left">Buyer</th>
+              <th className="min-w-[150px] py-3 text-left">Participants</th>
               <th className="min-w-[100px] py-3 text-left">Created</th>
               <th className="min-w-[100px] py-3 text-right">Amount</th>
             </tr>

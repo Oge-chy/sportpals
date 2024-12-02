@@ -9,7 +9,7 @@ import Checkout from '@/components/shared/Checkout'
 const CheckoutButton = ({ event }: { event: IEvent }) => {
   const { user } = useUser();
   const userId = user?.publicMetadata.userId as string;
-  const hasEventFinished = new Date(event.endDateTime) < new Date();
+  const hasEventFinished = new Date(event.registrationDeadline) < new Date();
 
   return (
     <div className="flex items-center gap-3">
@@ -18,7 +18,7 @@ const CheckoutButton = ({ event }: { event: IEvent }) => {
       ): (
         <>
           <SignedOut>
-            <Button asChild className="button rounded-full" size="lg">
+            <Button asChild className= "button rounded-full" size="lg">
                 <SignInButton />
             </Button>
           </SignedOut>
